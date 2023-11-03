@@ -43,7 +43,7 @@ export const App = () => {
         )}
         {!contacts.length && (
           <p className={css.messageUser}>
-            There are no contacts in the Phonebook
+            Sorry. There are no contacts in this Phonebook
           </p>
         )}
       </div>

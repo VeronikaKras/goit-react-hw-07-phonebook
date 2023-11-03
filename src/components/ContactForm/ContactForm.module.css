@@ -23,9 +23,9 @@
 }
 
 .btnForm:active {
-    background-color: rgb(55, 119, 216);
-    color: rgb(219, 124, 124);
-    border: 2px solid rgb(55, 119, 216);
+    background-color: rgb(108, 240, 141);
+    color: rgb(2,73,119);
+    border: 2px solid rgb(2,73,20);
 }
 
 .label {

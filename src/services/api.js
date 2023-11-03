@@ -16,3 +16,6 @@ export async function deleteContact(contactId) {
     const response = await axios.delete(`/contacts/contacts/${contactId}`);
     return response.data;
 }
+
+//  'https://6410cdb595656eab41c238e9.mockapi.io'
+// 'https://6544b57d5a0b4b04436cce5a.mockapi.io/api/v1/'

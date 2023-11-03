@@ -30,6 +30,6 @@
 
 .btnContactList:active {
     background-color: rgb(55, 119, 216);
-    color: white;
+    color: rgb(236, 11, 11);
     border: 2px solid rgb(55, 119, 216);
 }
