@@ -44,7 +44,7 @@ export const ContactForm = () => {
       user => user.name.toLocaleLowerCase() === name.toLowerCase()
     );
     if (userName) {
-      alert(`${name} is already in contacs`);
+      alert(`${name} is already in contacts`);
     } else {
       addContactToState(createContact({ name, number }));
       reset();
