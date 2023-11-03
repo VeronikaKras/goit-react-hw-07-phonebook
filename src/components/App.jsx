@@ -1,52 +1,52 @@
-import React from 'react';
-import { nanoid } from 'nanoid';
-import { useDispatch, useSelector } from 'react-redux';
+import css from 'components/App.module.css';
+import { ContactForm } from './ContactForm/ContactForm';
+import { Filter } from './Filter/Filter';
+import { ContactList } from './ContactList/ContactList';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { selectError, selectIsLoading } from '../redux/selectors/selectors';
+import { ThreeDots } from 'react-loader-spinner';
+import { fetchContacts } from '../redux/operations';
+import { getAllContacts } from 'redux/selectors/selectors';
 
-import {
-  addContactOnStore,
-  deleteContactOnStore,
-  updateFilter,
-} from 'redux/contacts';
-import ContactForm from './ContactForm';
-import Filter from './Filter';
-import ContactList from './ContactList';
-
-export function App() {
-  const contacts = useSelector(state => state.contactsFilter.contacts);
-  const filter = useSelector(state => state.contactsFilter.filter);
+export const App = () => {
+  const contacts = useSelector(getAllContacts);
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
 
-  const addContact = (name, number) => {
-    dispatch(addContactOnStore({ name, number, id: nanoid }));
-  };
-
-  const deleteContact = contactId => {
-    dispatch(deleteContactOnStore(contactId));
-  };
-
-  const handleFilterChange = filter => {
-    dispatch(updateFilter(filter));
-  };
-
-  const getFilteredContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
-
-  const filteredContacts = getFilteredContacts();
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
-    <div>
-      <h1>Phonebook</h1>
-      <ContactForm onAddContact={addContact} contacts={contacts} />
-      <h2>Contacts</h2>
-      <Filter filter={filter} onFilterChange={handleFilterChange} />
-      <ContactList
-        contacts={filteredContacts}
-        onDeleteContact={deleteContact}
-      />
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 40,
+        color: '#010101',
+      }}
+    >
+      <div>
+        <h1 className={css.title}>Phonebook</h1>
+        <ContactForm />
+        <h2 className={css.title}>Contacts</h2>
+        <Filter />
+        {isLoading && !error ? (
+          <div className={css.loader}>
+            <ThreeDots />
+          </div>
+        ) : (
+          <ContactList />
+        )}
+        {!contacts.length && (
+          <p className={css.messageUser}>
+            There are no contacts in the Phonebook
+          </p>
+        )}
+      </div>
     </div>
   );
-}
+};
